@@ -20,7 +20,7 @@
 
               {% if user.is_authenticated %}
               <li>
-                <a class="dropdown-item" href="{% url 'core:chats' %}">Chats</a>
+                <a class="dropdown-item" href="{% url 'chat:chat_list' %}">Chats</a>
               </li>
 
               <li>
@@ -57,14 +57,8 @@
 
               {% endif %}
 
-
             </ul>
           </div>
-
-
-
-
-
           <div class="dropdown" id="profile-area">
             <a href="{% url 'core:home' %}" class="ms-md-2">
               {% load static %} <img src="{% static 'images/Findx-logo.png' %}" height="40" />
@@ -120,11 +114,13 @@
 
 
         <div class="col-md-4">
+          {% include "products/catogory/search_list.html" %}
 
-          <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0">
+
+          <!-- <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0">
             <input autocomplete="off" type="search" class="form-control rounded" placeholder="Search" />
             <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
-          </form>
+          </form> -->
         </div>
         <!-- Center elements -->
 
@@ -134,28 +130,13 @@
           {% if user.is_authenticated %}
 
 
-
-
-
-
-
-
-
-
-
-
           <div class="d-flex align-items-center w-100 ">
-            <a class="nav-link" href="{% url 'products:products_create' %}" role="link" 
-              aria-expanded="false">
-              <img  class="rounded-circle" width="40" height="40" 
-                 src="{% static 'images\post-btn.png' %}" />
+            <a class="nav-link" href="{% url 'products:products_create' %}" role="link" aria-expanded="false">
+              <img class="rounded-circle" width="40" height="40" src="{% static 'images\post-btn.png' %}" />
 
             </a>
 
           </div>
-
-
-
 
 
           <div class="dropdown" id="profile-area">
@@ -169,13 +150,12 @@
               <li>
                 {% if user.profilemodel %}
                 <a class="dropdown-item" href="{% url 'user:profile_detail' user.profilemodel.id %}">My profile</a>
+                <a class="dropdown-item" href="{% url 'products:products_in_profile' %}">My Adds</a>
                 {% else %}
                 <a class="dropdown-item" href="{% url 'user:profile_create' %}">Set up profile</a>
                 {% endif %}
               </li>
-              <li>
-                <a class="dropdown-item" href="#">Settings</a>
-              </li>
+
               <li>
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
               </li>
@@ -198,11 +178,6 @@
     </div>
   </div>
 
-
-
-
-
-
 </header>
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <!-- Container wrapper -->
@@ -210,13 +185,11 @@
     <!-- Left links -->
     <ul class="navbar-nav flex-row">
       <li>
-      {% include "products/catogory/category_list.html" %}
-      
-
+        {% include "products/catogory/category_list.html" %}
       </li>
 
       <li class="nav-item me-2 me-lg-0 d-none d-md-inline-block">
-        <a class="nav-link" href="{% url 'core:chats' %}"> </a>
+        <a class="nav-link" href="{% url 'chat:chat_list' %}"> </a>
       </li>
       <li class="nav-item me-2 me-lg-0 d-none d-md-inline-block">
         <a class="nav-link" href="{% url 'products:product_list' %}">Buy</a>

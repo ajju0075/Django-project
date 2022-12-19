@@ -16,10 +16,10 @@ class ProductsModel(models.Model):
     user = models.ForeignKey(USER, on_delete=models.CASCADE, default=1)    
     category = models.ForeignKey(
         CategoryModel, on_delete=models.SET_NULL, null=True, blank=True)
-    product_name = models.CharField(max_length=30, null=False, blank=False)
-    price = models.IntegerField(null=False, blank=False)
-    image = models.ImageField(upload_to="product/images" , default="default/product.png" )
-    description = models.TextField()
+    product_name = models.CharField(max_length=30, null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True, )
+    image = models.ImageField(upload_to="product/images" , default="default/product.png",null=True, blank=True )
+    description = models.TextField(null=True, blank=True)
     created_date  = models.DateField(auto_now=True)
     
     def get_absolute_url(self):

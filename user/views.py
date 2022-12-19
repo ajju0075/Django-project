@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import forms as auth_forms
 from user import models as user_models
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from products import models as products_models
 
 USER = get_user_model
@@ -40,7 +40,7 @@ class ForgotView(views.TemplateView):
 class ProfileCreateView(LoginRequiredMixin, views.CreateView):  # profile create
     form_class = user_forms.ProfileForm
     model = user_models.ProfileModel
-    template_name = "user_profile/profile_create.html"
+    template_name = "user/user_profile/profile_create.html"
     success_url = reverse_lazy("core:home")
 
     def form_valid(self, form):
@@ -48,11 +48,21 @@ class ProfileCreateView(LoginRequiredMixin, views.CreateView):  # profile create
         return super().form_valid(form)
 
 
-class ProfileUpdateView(LoginRequiredMixin, views.UpdateView):  # profile update
+class ProfileUpdateView(PermissionRequiredMixin, LoginRequiredMixin, views.UpdateView):  # profile update
     form_class = user_forms.ProfileForm
     model = user_models.ProfileModel
     template_name = "user/user_profile/profile_update.html"
     success_url = reverse_lazy("core:home")
+    
+    def has_permission(self):
+        user = self.request.user
+        can_update_profile = False
+        profile = user_models.ProfileModel.objects.get(id=self.kwargs.get("pk"))
+        if profile.user == user:
+            can_update_profile = True
+        return can_update_profile
+
+
 
     
  

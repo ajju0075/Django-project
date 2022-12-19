@@ -10,27 +10,8 @@ from django.contrib import messages
 from products import models as products_model
 
 
-
-
-# Create your views here.
-
-
-
-
-
-class CatogoryListHomeView(views.ListView):
+class HomeView(views.TemplateView):
     template_name = "core/home.html"
-    model = products_model.CategoryModel
-    context_object_name = "categories"
-
-
-    
-
-class ChatsView(views.TemplateView):
-    template_name = "chats/chats.html"
-
-
-
 
 
 class FeedbackCreateView(views.CreateView):
@@ -60,6 +41,6 @@ class FeedbackCreateView(views.CreateView):
                 recipient_list=[to_email],
             )
             messages.success(self.request, "Feedback send successfully!")
-        except Exception :
+        except Exception:
             messages.error(self.request, "Something is went wrong! ")
         return super().form_valid(form)
